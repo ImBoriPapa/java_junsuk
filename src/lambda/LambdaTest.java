@@ -1,5 +1,7 @@
 package lambda;
 
+import java.util.function.Function;
+
 public class LambdaTest   {
 
     /**
@@ -35,6 +37,7 @@ public class LambdaTest   {
      *
      * ()-> (int)(int)(Math.random()*6)
      */
+
 
 
 }
