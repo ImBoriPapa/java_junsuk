@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.time.LocalDateTime.*;
@@ -90,8 +92,64 @@ public class StreamTest02 {
                 .map(n -> n + ", 배송이 완료되었습니다.")
                 .sorted()
                 .forEach(System.out::println);
-    }
 
+
+        /**
+         * mapToInt(),
+         * mapToLong(),
+         * mapToDouble()
+         */
+        Stream<Order> Orders = Stream.of(
+                new Order(1L, "남성옷", 1000, now(), PREPARING),
+                new Order(2L, "남성옷", 2000, now(), SHIPPING),
+                new Order(3L, "여성옷", 4000, now(), PREPARING),
+                new Order(4L, "유아옷", 1000, now(), PREPARING),
+                new Order(5L, "가전제품", 10000, now(), DELIVERY_COMPLETED),
+                new Order(6L, "신선식품", 2000, now(), SHIPPING)
+        );
+        /**
+         *int result = sum()
+         *OptionalDouble result = average()
+         *OptionalInt result =  max()
+         *OptionalInt result =  min()
+         */
+
+
+//        IntStream sum = Orders.mapToInt(Order::getPrice);
+//        IntStream average = Orders.mapToInt(Order::getPrice); //스트림을 다시 생성해야 한다.
+//        IntStream max = Orders.mapToInt(Order::getPrice);
+//        IntStream min = Orders.mapToInt(Order::getPrice);
+
+//        System.out.println("price sum = " + sum.sum());
+
+        /**
+         * summaryStatistics()
+         * double result = getAverage()
+         * long result = getCount()
+         * int result = getMin()
+         * int result = getMax()
+         * long result = getSum()
+         */
+//        IntStream intStream = Orders.mapToInt(Order::getPrice);
+//        IntSummaryStatistics intSummaryStatistics = intStream.summaryStatistics();
+//        double average = intSummaryStatistics.getAverage();
+//        long count = intSummaryStatistics.getCount();
+//        int min = intSummaryStatistics.getMin();
+
+        /**
+         * flatMap()
+         */
+        Stream<String[]> quantityList = Stream.of(
+                new String[]{"여성의류", "남성의류", "유아의류"},
+                new String[]{"냉장식품", "냉동식품", "가공식품"},
+                new String[]{"가구", "가전", "잡화"}
+        );
+        Stream<String> streamList = quantityList.flatMap(Arrays::stream);
+        streamList.forEach(System.out::print);
+
+        System.out.println();
+
+    }
 
 }
 
