@@ -28,8 +28,8 @@ public class StreamTest05 {
         List<Dog> maleDogs = dogBySex.get(true);
         List<Dog> femaleDogs = dogBySex.get(false);
 
-        maleDogs.forEach(n-> System.out.println("maleDogs.name = " + n.name));
-        femaleDogs.forEach(n-> System.out.println("femaleDogs.name = " + n.name));
+        maleDogs.forEach(n -> System.out.println("maleDogs.name = " + n.name));
+        femaleDogs.forEach(n -> System.out.println("femaleDogs.name = " + n.name));
 
         Stream<Dog> dogs2 = Stream.of(dogs);
         Map<Boolean, Long> dogsNumBySex = dogs2.collect(Collectors.partitioningBy(Dog::isMale, Collectors.counting()));
@@ -39,8 +39,30 @@ public class StreamTest05 {
         Stream<Dog> dogs3 = Stream.of(dogs);
         Map<Boolean, Map<Boolean, List<Dog>>> dogsNameOverThen7Years = dogs3.collect(Collectors.partitioningBy(Dog::isMale, Collectors.partitioningBy(a -> a.age > 7)));
 
-        for(Dog d : dogsNameOverThen7Years.get(true).get(true)) System.out.println(" maleDogsNameOverThen7Years= " + d);
-        for(Dog d : dogsNameOverThen7Years.get(true).get(true)) System.out.println(" femaleDogsNameOverThen7Years= " + d);
+        for (Dog d : dogsNameOverThen7Years.get(true).get(true))
+            System.out.println(" maleDogsNameOverThen7Years= " + d);
+        for (Dog d : dogsNameOverThen7Years.get(true).get(true))
+            System.out.println(" femaleDogsNameOverThen7Years= " + d);
+
+        /**
+         * groupingBy()
+         */
+        Stream<Dog> dog4 = Stream.of(dogs);
+        Map<String, List<Dog>> dogList = dog4.collect(Collectors.groupingBy(Dog::getName));
+        for (String names : dogList.keySet()) {
+            System.out.println("dog name = " + names);
+        }
+
+        Stream<Dog> dog5 = Stream.of(dogs);
+        Map<Integer, Map<Integer, List<Dog>>> dogByAgeAndWeight = dog5.collect(
+                Collectors.groupingBy(Dog::getAge,
+                        Collectors.groupingBy(Dog::getWeight)
+                ));
+        for (Integer integer : dogByAgeAndWeight.keySet()) {
+            System.out.println("integer = " + integer);
+        }
+
+
     }
 }
 
